@@ -5,11 +5,10 @@ import com.opencsv.bean.CsvToBeanBuilder;
 import com.validity.monolithstarter.model.Response;
 import com.validity.monolithstarter.model.User;
 import info.debatty.java.stringsimilarity.NormalizedLevenshtein;
-import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -21,30 +20,22 @@ public class HelloService {
         return "Hello from the server!";
     }
 
-    public List<User> readCsv() {
-        File file = new File("C:\\Users\\Richa Singh\\Downloads\\simple-app-starter\\test-files\\normal.csv");
-        // validate file
-        if (!file.canWrite()) {
-            //model.addAttribute("message", "Please select a CSV file to upload.");
-            //model.addAttribute("status", false);
-        } else {
+    public List<User> readCsv(MultipartFile file) {
+        // parse CSV file to create a list of `User` objects
+        try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
-            // parse CSV file to create a list of `User` objects
-            try (Reader reader = new BufferedReader(new InputStreamReader(FileUtils.openInputStream(file)))) {
+            // create csv bean reader
+            CsvToBean<User> csvToBean = new CsvToBeanBuilder(reader)
+                .withType(User.class)
+                .withIgnoreLeadingWhiteSpace(true)
+                .build();
 
-                // create csv bean reader
-                CsvToBean<User> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(User.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
-
-                // convert `CsvToBean` object to list of users
-                return csvToBean.parse();
-            } catch (Exception ex) {
-                //model.addAttribute("message", "An error occurred while processing the CSV file.");
-                //model.addAttribute("status", false);
-            }
+            // convert `CsvToBean` object to list of users
+            return csvToBean.parse();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+
         return null;
     }
 

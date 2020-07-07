@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+</head>
+<body>
+Get View
+<form method="post" th:action="@{/csv}" enctype="multipart/form-data">
+File Name:<input type="file" name="file">
+<input type="submit">
+</form>
+
+<br/>
+<br/>
+Get Clean JSON
+<form method="post" th:action="@{/api/csv/clean}" enctype="multipart/form-data">
+    File Name:<input type="file" name="file">
+    <input type="submit">
+</form>
+
+<br/>
+<br/>
+Get Dirty JSON
+<form method="post" th:action="@{/api/csv/duplicates}" enctype="multipart/form-data">
+    File Name:<input type="file" name="file">
+    <input type="submit">
+</form>
+</body>
+</html>
