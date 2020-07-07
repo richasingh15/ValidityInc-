@@ -28,8 +28,7 @@ public class MainController {
         Collection<String> activeProfiles = Arrays.asList(environment.getActiveProfiles());
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)) {
             return "main_dev";
-        }
-        else {
+        } else {
             return "main";
         }
     }
