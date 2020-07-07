@@ -119,3 +119,6 @@ docker build -t monolithstarter-svc .
 docker run -p 5000:8080 monolithstarter-svc
 ```
 The full application is now accessible at [localhost:5000](http://localhost:5000/) (or whatever port you chose to use)
+
+#Starting point of the enhancement in the application use the below url in your browswer:
+http://localhost:8080/csv
