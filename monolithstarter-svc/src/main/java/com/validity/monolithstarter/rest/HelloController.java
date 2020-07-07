@@ -3,10 +3,7 @@ package com.validity.monolithstarter.rest;
 import com.validity.monolithstarter.model.User;
 import com.validity.monolithstarter.service.HelloService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
@@ -24,7 +21,7 @@ public class HelloController {
         return helloService.getHelloMessage();
     }
 
-    @GetMapping("/csv/duplicates")
+    @PostMapping("/csv/duplicates")
     @ResponseBody
     public ResponseEntity duplicates(MultipartFile file) {
         if (file == null || file.isEmpty()) {
@@ -34,7 +31,7 @@ public class HelloController {
         return ResponseEntity.ok().body(helloService.getDuplicates(userList).getDuplicates());
     }
 
-    @GetMapping("/csv/clean")
+    @PostMapping("/csv/clean")
     @ResponseBody
     public ResponseEntity clean(MultipartFile file) {
         if (file == null || file.isEmpty()) {
